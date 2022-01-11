@@ -1,0 +1,35 @@
+{
+  "flats": [
+    {
+      "rooms": [
+        {
+          "name": "DinnerRoom",
+          "powerSpots": [
+            {
+              "type": "PLUG"
+            },
+            {
+              "type": "PLUG"
+            }
+          ]
+        }
+      ],
+      "floor": "2",
+      "flatNumber": "23"
+    },
+    {
+      "rooms": [
+        {
+          "name": "DinnerRoom",
+          "powerSpots": [
+            {
+              "type": "PLUG"
+            }
+          ]
+        }
+      ],
+      "floor": "5",
+      "flatNumber": "123"
+    }
+  ]
+}
