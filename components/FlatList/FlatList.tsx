@@ -9,10 +9,10 @@ type FlatListProps = {
 
 export const FlatList: React.FC<FlatListProps> = ({ flats }) => {
   return (
-    <>
+    <div className="flats-container">
       {flats.map((flatItem) => (
         <FlatView flat={flatItem} />
       ))}
-    </>
+    </div>
   );
 };
