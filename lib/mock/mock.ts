@@ -5,6 +5,7 @@ import {
   RoomType,
   SwitcherEnum,
 } from '../types/entities';
+
 const powerSpotF = {
   type: PowerSpotEnum.PLUG,
   plugType: PowerPlugsEnum.F,
@@ -14,6 +15,7 @@ const powerSpotF = {
   amperage: 16,
   voltageRange: [220, 240],
 };
+
 const powerSpotA = {
   type: PowerSpotEnum.PLUG,
   plugType: PowerPlugsEnum.A,
@@ -23,6 +25,7 @@ const powerSpotA = {
   amperage: 15,
   voltageRange: [100, 127],
 };
+
 const powerSpotB = {
   type: PowerSpotEnum.PLUG,
   plugType: PowerPlugsEnum.C,
@@ -32,6 +35,7 @@ const powerSpotB = {
   amperage: 16,
   voltageRange: [220, 240],
 };
+
 const powerSpotC = {
   type: PowerSpotEnum.PLUG,
   plugType: PowerPlugsEnum.C,
@@ -41,17 +45,20 @@ const powerSpotC = {
   amperage: 15,
   voltageRange: [100, 127],
 };
+
 const EthernetSpot1 = {
   type: PowerSpotEnum.ETHERNET,
   providerName: 'Skylink',
   speed: 100,
 };
+
 const Switcher1 = {
   type: PowerSpotEnum.SWITCHER,
   switchType: SwitcherEnum.double,
   isPressable: true,
   buttonCount: 2,
 };
+
 const Switcher2 = {
   type: PowerSpotEnum.SWITCHER,
   switchType: SwitcherEnum.spinning,
@@ -62,10 +69,12 @@ const room1: RoomType = {
   name: 'DinnerRoom',
   powerSpots: [powerSpotF, powerSpotF, powerSpotF, EthernetSpot1, Switcher1],
 };
+
 const room2: RoomType = {
   name: 'Bedroom',
   powerSpots: [powerSpotA, powerSpotA, EthernetSpot1, Switcher2],
 };
+
 const room3: RoomType = {
   name: 'Kitchen',
   powerSpots: [
@@ -78,6 +87,7 @@ const room3: RoomType = {
     Switcher1,
   ],
 };
+
 export const flatMocks: FlatType[] = [
   {
     rooms: [room1, room2, room3],

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { flatMocks } from '../../lib/mock/mock';
+import { flatMocks } from '../../lib/mock';
 import { FlatType } from '../../lib/types/entities';
 type Data = FlatType[];
 

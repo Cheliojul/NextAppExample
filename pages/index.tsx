@@ -10,10 +10,18 @@ type HomePageProps = {
   preloadedFlatList: FlatType[];
 };
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Home: NextPage<HomePageProps> = () => {
   const { data, error } = useSWR('/api/getFlats', fetcher);
-  if (error) return <div>Failed to load flats</div>;
-  if (!data) return <div>Loading...</div>;
+
+  if (error) {
+    return <div>Failed to load flats</div>;
+  }
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -22,11 +30,10 @@ const Home: NextPage<HomePageProps> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
-        <div className="flats-container">
-          <FlatList flats={data} />
-        </div>
+        <FlatList flats={data} />
       </body>
     </div>
   );
 };
+
 export default Home;
