@@ -1,9 +1,11 @@
 export type FlatType = {
+  id: string;
   flatNumber: number;
   floor: number;
   rooms: RoomType[];
 };
 export type RoomType = {
+  id: string;
   name: string;
   powerSpots: PowerSpotsType[];
 };
@@ -15,18 +17,19 @@ export type PowerSpotType = {
   amperage: number;
   voltageRange: number[];
 };
-export type PowerSpotsType = { type: PowerSpotEnum } & (
-  | PowerSpotType
-  | SwitcherType
-  | EthernetSpotType
-);
+export type PowerSpotsType = { type: string };
+// & (
+//   | PowerSpotType
+//   | SwitcherType
+//   | EthernetSpotType
+// );
 export type EthernetSpotType = {
   providerName: string;
   speed: number;
 };
 export type SwitcherType = { switchType: SwitcherEnum };
 export enum PowerSpotEnum {
-  SWITCHER = 'Switcher',
+  SWITCHER = 'SWITCHER',
   PLUG = 'PLUG',
   ETHERNET = 'ETHERNET',
 }
@@ -35,7 +38,7 @@ export enum SwitcherEnum {
   double = 'DoubleSwitcher',
   spinning = 'SpinningSwitcher',
 }
-export enum PowerPlugsEnum{
+export enum PowerPlugsEnum {
   A = 'A',
   B = 'B',
   C = 'C',

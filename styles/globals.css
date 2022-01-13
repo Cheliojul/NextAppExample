@@ -18,12 +18,13 @@ a {
 * {
   box-sizing: border-box;
 }
-.flats-container{
+.flats-container {
   display: flex;
-  /* flex-direction: column; */
+  align-items: stretch;
   flex-wrap: wrap;
   justify-content: center;
-  /* width: 50%; */
+  flex-direction: column;
+  align-content: center;
 }
 .flat {
   display: flex;
@@ -31,7 +32,6 @@ a {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  /* min-width: 33.33%; */
   max-width: 50%;
   background: rgba(100, 100, 250, 1);
   border: 1px solid black;
@@ -41,17 +41,27 @@ a {
 .room-container {
   display: flex;
   flex-direction: row;
+  /* justify-items: flex-start; */
   flex-wrap: wrap;
 }
 .room {
   display: flex;
   width: 100%;
+  justify-content: center;
   padding: 5px;
   border-top: 1px solid black;
 }
 .room h4 {
-  width: 20%;
-  text-align: center;
+  display: flex;
+  /* margin-right:auto; */
+  /* justify-self: flex-start; */
+  align-items: center;
+  justify-content: center;
+  vertical-align: auto;
+  border-right: 1px solid black;
+}
+.power-spot:last-child {
+  margin-right: auto;
 }
 .power-spot {
   font-size: 14px;
@@ -59,12 +69,23 @@ a {
   justify-content: center;
   align-items: center;
   padding: 8px;
-  margin: 5px;
+  margin: 5px 5px 5px 10px;
   background: rgb(213, 216, 14);
   border-radius: 10px;
 }
-
-@media screen and (max-width:1200px) {
+.form-add-button {
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-add-spot-button {
+  position: 'absolute';
+  bottom: 0;
+  max-height: 3rem;
+}
+.form-add-room-button {
+  margin: 0 auto;
+}
+@media screen and (max-width: 1200px) {
   .room-container {
     flex-direction: column;
     flex-wrap: wrap;
@@ -72,8 +93,14 @@ a {
   .room {
     flex-direction: column;
   }
+
   .flat {
-    width: 60%;
+    min-width: 200px;
+    max-width: 300px;
   }
-  .power-spot {}
+}
+@media screen and (min-width: 1200px) {
+  .room h4 {
+    width: 20%;
+  }
 }

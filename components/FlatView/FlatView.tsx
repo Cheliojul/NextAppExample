@@ -9,7 +9,7 @@ type FlatViewProps = {
 
 export const FlatView: React.FC<FlatViewProps> = ({ flat }) => {
   return (
-    <div className="flat">
+    <div className="flat" key={flat.id}>
       <h3 className="font-bold">Flat №{flat.flatNumber}</h3>
       <div className="room-container">
         <RoomList rooms={flat.rooms} />

@@ -8,9 +8,10 @@ type FlatListProps = {
 };
 
 export const FlatList: React.FC<FlatListProps> = ({ flats }) => {
+  console.log(flats,'inList')
   return (
     <div className="flats-container">
-      {flats.map((flatItem) => (
+      {flats.length >= 1 && flats.map((flatItem) => (
         <FlatView flat={flatItem} />
       ))}
     </div>
