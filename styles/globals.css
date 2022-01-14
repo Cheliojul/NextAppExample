@@ -41,7 +41,6 @@ a {
 .room-container {
   display: flex;
   flex-direction: row;
-  /* justify-items: flex-start; */
   flex-wrap: wrap;
 }
 .room {
@@ -53,8 +52,6 @@ a {
 }
 .room h4 {
   display: flex;
-  /* margin-right:auto; */
-  /* justify-self: flex-start; */
   align-items: center;
   justify-content: center;
   vertical-align: auto;
@@ -78,8 +75,8 @@ a {
   margin-right: auto;
 }
 .form-add-spot-button {
-  position: 'absolute';
-  bottom: 0;
+  /* position: 'absolute'; */
+  /* bottom: 0; */
   max-height: 3rem;
 }
 .form-add-room-button {
@@ -97,6 +94,15 @@ a {
   .flat {
     min-width: 200px;
     max-width: 300px;
+  }
+  .power-spot:last-child {
+    margin-right: 0;
+  }
+  .room h4 {
+    border-right: 0;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid black;
   }
 }
 @media screen and (min-width: 1200px) {

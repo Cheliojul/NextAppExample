@@ -1,10 +1,17 @@
+import { FieldError } from 'react-hook-form';
+
 export type FlatType = {
   id: string;
   flatNumber: string;
   floor: string;
   rooms: RoomType[];
-}
-
+};
+export type FlatFormErrorsShape = {
+  flatNumber: YupErrorShape;
+  floor: YupErrorShape;
+  rooms: [{ name: YupErrorShape }];
+};
+export type YupErrorShape = FieldError | undefined;
 export type RoomType = {
   id: string;
   name: string;
