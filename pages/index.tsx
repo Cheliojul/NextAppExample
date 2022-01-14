@@ -2,26 +2,30 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import styles from '../styles/Home.module.css';
-import useSWR from 'swr';
 import { FlatList } from '../components/FlatList';
 import type { FlatType } from '../lib/types/entities';
+import { useStore } from '../lib/store/useStoreHook';
+import useSWR from 'swr';
 
 type HomePageProps = {
   preloadedFlatList: FlatType[];
 };
+
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Home: NextPage<HomePageProps> = () => {
   const { data, error } = useSWR('/api/getFlats', fetcher);
+  const flats = useStore(state => state.flats);
+  const setFlats = useStore(state => state.setFlats);
 
-  if (error) {
-    return <div>Failed to load flats</div>;
+  if (!flats || !flats.length) {
+    setFlats(data);
   }
 
-  if (!data) {
-    return <div>Loading...</div>;
+  if (!flats || !flats.length) {
+    return <div>No flats</div>;
   }
-
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -30,7 +34,7 @@ const Home: NextPage<HomePageProps> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
-        <FlatList flats={data} />
+        <FlatList flats={flats} />
       </body>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   SwitcherEnum,
 } from '../types/entities';
 
+export const BASIC_URL = 'http://localhost:3000/api/getFlats';
 const powerSpotF = {
   type: PowerSpotEnum.PLUG,
   plugType: PowerPlugsEnum.F,
@@ -66,16 +67,19 @@ const Switcher2 = {
 };
 
 const room1: RoomType = {
+  id: '1',
   name: 'DinnerRoom',
   powerSpots: [powerSpotF, powerSpotF, powerSpotF, EthernetSpot1, Switcher1],
 };
 
 const room2: RoomType = {
+  id: '2',
   name: 'Bedroom',
   powerSpots: [powerSpotA, powerSpotA, EthernetSpot1, Switcher2],
 };
 
 const room3: RoomType = {
+  id: '3',
   name: 'Kitchen',
   powerSpots: [
     powerSpotB,
@@ -90,16 +94,19 @@ const room3: RoomType = {
 
 export const flatMocks: FlatType[] = [
   {
+    id: '1',
     rooms: [room1, room2, room3],
     floor: 2,
     flatNumber: 26,
   },
   {
+    id: '2',
     rooms: [room1, room2, room3],
     floor: 8,
     flatNumber: 116,
   },
   {
+    id: '3',
     rooms: [room1, room2, room2, room3],
     floor: 1,
     flatNumber: 226,
