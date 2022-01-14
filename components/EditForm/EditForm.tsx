@@ -2,18 +2,10 @@ import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useStore } from '../../lib/store/useStoreHook';
-import {
-  FlatFormDataType,
-  FlatType,
-  PowerSpotEnum,
-  RoomType,
-} from '../../lib/types/entities';
+import { FlatType, PowerSpotEnum, RoomType } from '../../lib/types/entities';
 
 export const EditForm: React.FC = () => {
-  const [newFlatState, setNewFlatState] = useState<FlatType>({
-    id: uuidv4(),
-    floor: 1,
-    flatNumber: 1,
+  const [flatState, setFlatState] = useState<{ rooms: RoomType[] }>({
     rooms: [
       {
         id: uuidv4(),
@@ -23,58 +15,25 @@ export const EditForm: React.FC = () => {
     ],
   });
   const addFlatToStore = useStore((state) => state.addFlat);
-  const flats = useStore((state) => state.flats);
-  const handleAddPowerSpotClick = (e, id: string) => {
-    const newRoomsState = newFlatState.rooms.map((room) => {
-      if (id === room.id) {
-        room.powerSpots.push({ type: `${PowerSpotEnum.PLUG}` });
-      }
-      return room;
+  const handleAddPowerSpotClick = (index: number) => {
+    const newFlatState = flatState;
+    newFlatState.rooms[index].powerSpots.push({
+      type: '',
     });
-    setNewFlatState({ ...newFlatState, rooms: newRoomsState });
+    setFlatState({ rooms: [...newFlatState.rooms] });
   };
 
   const handleAddRoomClick = () => {
-    setNewFlatState({
-      ...newFlatState,
+    setFlatState({
       rooms: [
-        ...newFlatState.rooms,
+        ...flatState.rooms,
         {
           id: uuidv4(),
-          name: '',
           powerSpots: [],
+          name: '',
         },
       ],
     });
-  };
-  const onFloorOrNumberChange = (event: MouseEvent, field: string) => {
-    newFlatState[field] = (event.target as HTMLInputElement).value;
-    setNewFlatState({ ...newFlatState });
-  };
-  const onRoomsNameChange = (event: MouseEvent, id: string) => {
-    const newRoomsState = newFlatState.rooms.map((room) => {
-      if (id === room.id) {
-        room.name = (event.target as HTMLInputElement).value;
-      }
-      return room;
-    });
-    setNewFlatState({ ...newFlatState, rooms: newRoomsState });
-  };
-
-  const onRoomsPowerSpotChange = (
-    event: MouseEvent,
-    index: number,
-    id: string
-  ) => {
-    const newRoomsState = newFlatState.rooms.map((room: RoomType) => {
-      if (id === room.id) {
-        room.powerSpots[index] = {
-          type: (event.target as HTMLInputElement).value,
-        };
-      }
-      return room;
-    });
-    setNewFlatState({ ...newFlatState, rooms: newRoomsState });
   };
 
   async function onSubmit(e) {
@@ -82,7 +41,7 @@ export const EditForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
 
-    const flatData: FlatFormDataType = {
+    const flatData: FlatType = {
       id: uuidv4(),
       floor: '1',
       flatNumber: '1',
@@ -110,6 +69,7 @@ export const EditForm: React.FC = () => {
           },
         ];
       }
+
       if (fieldName.includes('powerSpot')) {
         flatData.rooms[roomIndex].powerSpots = [
           ...flatData.rooms[roomIndex].powerSpots,
@@ -119,7 +79,7 @@ export const EditForm: React.FC = () => {
         ];
       }
     });
-    addFlatToStore(newFlatState);
+    addFlatToStore(flatData);
   }
 
   return (
@@ -138,9 +98,7 @@ export const EditForm: React.FC = () => {
               id="grid-first-name"
               name="flatNumber"
               type="number"
-              defaultValue={newFlatState.flatNumber}
               placeholder="999"
-              onChange={(e) => onFloorOrNumberChange(e, 'flatNumber')}
               min={1}
             />
           </div>
@@ -156,15 +114,13 @@ export const EditForm: React.FC = () => {
               id="grid-first-name"
               type="number"
               placeholder="5"
-              defaultValue={newFlatState.floor}
-              onChange={(e) => onFloorOrNumberChange(e, 'floor')}
               min={1}
               max={100}
             />
           </div>
         </div>
         <div className="flex flex-col border">
-          {newFlatState.rooms.map((room, roomIndex) => (
+          {flatState.rooms.map((room, roomIndex) => (
             <div className="flex flex-col border">
               <div
                 key={room.id}
@@ -183,8 +139,6 @@ export const EditForm: React.FC = () => {
                     type="text"
                     name={`name${roomIndex}`}
                     placeholder="Kitchen"
-                    defaultValue={room.name}
-                    onChange={(event) => onRoomsNameChange(event, room.id)}
                   />
                 </div>
                 <>
@@ -205,9 +159,6 @@ export const EditForm: React.FC = () => {
                           id="grid-state"
                           name={`${roomIndex}powerSpot${index}`}
                           defaultValue={PowerSpotEnum.PLUG}
-                          onChange={(event) =>
-                            onRoomsPowerSpotChange(event, index, room.id)
-                          }
                         >
                           <option>Plug</option>
                           <option>Ethernet</option>
@@ -229,7 +180,7 @@ export const EditForm: React.FC = () => {
               </div>
               <button
                 type="button"
-                onClick={(e) => handleAddPowerSpotClick(e, room.id)}
+                onClick={() => handleAddPowerSpotClick(roomIndex)}
                 className="flex-initial form-add-button m-2 form-add-spot-button bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded inline-flex justify-self-center items-center "
               >
                 <svg
