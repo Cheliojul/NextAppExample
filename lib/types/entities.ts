@@ -1,3 +1,10 @@
+export type FlatFormDataType = {
+  id: string;
+  flatNumber: string;
+  floor: string;
+  rooms: RoomType[];
+}
+  
 export type FlatType = {
   id: string;
   flatNumber: number;

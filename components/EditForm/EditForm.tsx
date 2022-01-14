@@ -2,7 +2,12 @@ import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useStore } from '../../lib/store/useStoreHook';
-import { FlatType, PowerSpotEnum, RoomType } from '../../lib/types/entities';
+import {
+  FlatFormDataType,
+  FlatType,
+  PowerSpotEnum,
+  RoomType,
+} from '../../lib/types/entities';
 
 export const EditForm: React.FC = () => {
   const [newFlatState, setNewFlatState] = useState<FlatType>({
@@ -56,10 +61,16 @@ export const EditForm: React.FC = () => {
     setNewFlatState({ ...newFlatState, rooms: newRoomsState });
   };
 
-  const onRoomsPowerSpotChange = (event: MouseEvent, index: number, id: string) => {
+  const onRoomsPowerSpotChange = (
+    event: MouseEvent,
+    index: number,
+    id: string
+  ) => {
     const newRoomsState = newFlatState.rooms.map((room: RoomType) => {
       if (id === room.id) {
-        room.powerSpots[index] = { type: (event.target as HTMLInputElement).value };
+        room.powerSpots[index] = {
+          type: (event.target as HTMLInputElement).value,
+        };
       }
       return room;
     });
@@ -68,11 +79,51 @@ export const EditForm: React.FC = () => {
 
   async function onSubmit(e) {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const flatData: FlatFormDataType = {
+      id: uuidv4(),
+      floor: '1',
+      flatNumber: '1',
+      rooms: [],
+    };
+
+    formData.forEach((value, fieldName) => {
+      let roomIndex = Number(fieldName.slice(0, 1));
+
+      if (fieldName.includes('floor')) {
+        flatData.floor = `${value}`;
+      }
+
+      if (fieldName.includes('flatNumber')) {
+        flatData.flatNumber = `${value}`;
+      }
+
+      if (fieldName.includes('name')) {
+        flatData.rooms = [
+          ...flatData.rooms,
+          {
+            id: uuidv4(),
+            powerSpots: [],
+            name: `${value}`,
+          },
+        ];
+      }
+      if (fieldName.includes('powerSpot')) {
+        flatData.rooms[roomIndex].powerSpots = [
+          ...flatData.rooms[roomIndex].powerSpots,
+          {
+            type: `${value}`,
+          },
+        ];
+      }
+    });
     addFlatToStore(newFlatState);
   }
 
   return (
-    <form onSubmit={(e)=>onSubmit(e)}>
+    <form onSubmit={(e) => onSubmit(e)}>
       <div className="w-full border p-5">
         <div className="flex flex-wrap -mx-3 mb-6 ">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
@@ -85,6 +136,7 @@ export const EditForm: React.FC = () => {
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               id="grid-first-name"
+              name="flatNumber"
               type="number"
               defaultValue={newFlatState.flatNumber}
               placeholder="999"
@@ -112,7 +164,7 @@ export const EditForm: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col border">
-          {newFlatState.rooms.map((room, index) => (
+          {newFlatState.rooms.map((room, roomIndex) => (
             <div className="flex flex-col border">
               <div
                 key={room.id}
@@ -129,7 +181,7 @@ export const EditForm: React.FC = () => {
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="grid-city"
                     type="text"
-                    name="name"
+                    name={`name${roomIndex}`}
                     placeholder="Kitchen"
                     defaultValue={room.name}
                     onChange={(event) => onRoomsNameChange(event, room.id)}
@@ -151,7 +203,7 @@ export const EditForm: React.FC = () => {
                         <select
                           className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                           id="grid-state"
-                          name="powerSpots"
+                          name={`${roomIndex}powerSpot${index}`}
                           defaultValue={PowerSpotEnum.PLUG}
                           onChange={(event) =>
                             onRoomsPowerSpotChange(event, index, room.id)
