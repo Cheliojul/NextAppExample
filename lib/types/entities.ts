@@ -6,12 +6,6 @@ export type FlatType = {
   floor: string;
   rooms: RoomType[];
 };
-export type FlatFormErrorsShape = {
-  flatNumber: YupErrorShape;
-  floor: YupErrorShape;
-  rooms: [{ name: YupErrorShape }];
-};
-export type YupErrorShape = FieldError | undefined;
 export type RoomType = {
   id: string;
   name: string;
@@ -26,11 +20,6 @@ export type PowerSpotType = {
   voltageRange: number[];
 };
 export type PowerSpotsType = { type: string };
-// & (
-//   | PowerSpotType
-//   | SwitcherType
-//   | EthernetSpotType
-// );
 export type EthernetSpotType = {
   providerName: string;
   speed: number;

@@ -2,24 +2,17 @@ import React from 'react';
 import {
   useFieldArray,
   Control,
-  RegisterOptions,
-  ChangeHandler,
+  UseFormRegister,
+  FieldErrors,
 } from 'react-hook-form';
-import { FlatFormErrorsShape, FlatType } from '../../lib/types/entities';
+
+import { FlatType } from '../../lib/types/entities';
 import { PowerSpotsView } from './PowerSpotsView';
 
 type RoomsViewProps = {
   control: Control<FlatType>;
-  register: (
-    name: string,
-    RegisterOptions?: RegisterOptions
-  ) => {
-    onChange: ChangeHandler;
-    onBlur: ChangeHandler;
-    name: any;
-    ref: React.Ref<any>;
-  };
-  errors: FlatFormErrorsShape;
+  register: UseFormRegister<FlatType>;
+  errors: FieldErrors<FlatType>;
 };
 
 export const RoomsView: React.FC<RoomsViewProps> = ({
@@ -27,60 +20,13 @@ export const RoomsView: React.FC<RoomsViewProps> = ({
   register,
   errors,
 }: RoomsViewProps) => {
-  const {
-    fields: roomFields,
-    append: appendRoom,
-    remove,
-    prepend,
-  } = useFieldArray({
+  const { fields: roomFields, append: appendRoom } = useFieldArray({
     control,
     name: 'rooms',
   });
 
   return (
     <div className="w-full border p-5">
-      <div className="flex flex-wrap -mx-3 mb-6 ">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
-          >
-            Flat number
-          </label>
-          <input
-            className={
-              `appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white` +
-              (errors.flatNumber?.message ? 'border border-red-500' : '')
-            }
-            id="grid-first-name"
-            type="number"
-            {...register('flatNumber')}
-            placeholder="999"
-            min={1}
-          />
-          <p className="text-red-500 text-xs italic">
-            {errors.flatNumber?.message}
-          </p>
-        </div>
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 ">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="grid-first-name"
-          >
-            Floor
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="grid-first-name"
-            type="number"
-            {...register('floor')}
-            placeholder="5"
-            min={1}
-            max={100}
-          />
-          <p className="text-red-500 text-xs italic">{errors.floor?.message}</p>
-        </div>
-      </div>
       <div className="flex flex-col border">
         {roomFields.map((room, roomIndex) => (
           <div className="flex flex-col border">
@@ -105,7 +51,7 @@ export const RoomsView: React.FC<RoomsViewProps> = ({
                   }
                   id="grid-city"
                   type="text"
-                  {...register(`rooms[${roomIndex}].name` as const)}
+                  {...register(`rooms.${roomIndex}.name` as const)}
                   placeholder="Kitchen"
                 />
                 <p className="text-red-500 text-xs italic p-2">
@@ -115,7 +61,11 @@ export const RoomsView: React.FC<RoomsViewProps> = ({
                     : ''}
                 </p>
               </div>
-              <PowerSpotsView {...{ control, register, roomIndex, errors }} />
+              <PowerSpotsView
+                control={control}
+                register={register}
+                roomIndex={roomIndex}
+              />
             </div>
           </div>
         ))}
@@ -123,7 +73,7 @@ export const RoomsView: React.FC<RoomsViewProps> = ({
       <div className="flex flex-1 p-4">
         <button
           type="button"
-          className="form-add-room-button form-add-button bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex justify-self-center items-center "
+          className="form-add-room-button ml-auto mr-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex justify-self-center items-center "
           onClick={() => appendRoom({ name: '' })}
         >
           <svg

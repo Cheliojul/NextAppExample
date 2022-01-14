@@ -1,32 +1,26 @@
 import React from 'react';
-import { ChangeHandler, Control, RegisterOptions, useFieldArray } from 'react-hook-form';
+import {
+  Control,
+  useFieldArray,
+  UseFormRegister,
+} from 'react-hook-form';
 
-import type { FlatFormErrorsShape, FlatType } from '../../lib/types/entities';
+import type { FlatType } from '../../lib/types/entities';
 
-type PowerSpotsView = {
+type PowerSpotsViewProps = {
   control: Control<FlatType>;
-  register: (
-    name: string,
-    RegisterOptions?: RegisterOptions
-  ) => {
-    onChange: ChangeHandler;
-    onBlur: ChangeHandler;
-    name: string;
-    ref: React.Ref<any>;
-  };
+  register: UseFormRegister<FlatType>;
   roomIndex: number;
-  errors: FlatFormErrorsShape;
 };
 
-export const PowerSpotsView: React.FC<PowerSpotsView> = ({
+export const PowerSpotsView: React.FC<PowerSpotsViewProps> = ({
   roomIndex,
   control,
   register,
-  errors,
-}: PowerSpotsView) => {
+}: PowerSpotsViewProps) => {
   const {
     fields: powerSpotFields,
-    remove,
+
     append: appendPowerSpot,
   } = useFieldArray({
     control,
@@ -52,7 +46,7 @@ export const PowerSpotsView: React.FC<PowerSpotsView> = ({
                 className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-state"
                 {...register(
-                  `rooms[${roomIndex}].powerSpots[${index}].type` as const
+                  `rooms.${roomIndex}.powerSpots.${index}.type` as const
                 )}
               >
                 <option>Plug</option>
