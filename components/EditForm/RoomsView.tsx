@@ -45,7 +45,7 @@ export const RoomsView: React.FC<RoomsViewProps> = ({
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="grid-first-name"
           >
-            Flat number{console.log(errors)}
+            Flat number
           </label>
           <input
             className={
