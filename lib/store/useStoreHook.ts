@@ -18,6 +18,7 @@ export const useStore = create<FlatStateType>((set) => ({
   clearFlats: () => set({ flats: [] }),
 }));
 
+// TODO: use it for store debugging 
 // if (process.env.NODE_ENV === 'development') {
 //   mountStoreDevtool('Store', useStore);
 // }

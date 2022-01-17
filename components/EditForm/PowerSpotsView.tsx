@@ -20,7 +20,6 @@ export const PowerSpotsView: React.FC<PowerSpotsViewProps> = ({
 }: PowerSpotsViewProps) => {
   const {
     fields: powerSpotFields,
-
     append: appendPowerSpot,
   } = useFieldArray({
     control,
