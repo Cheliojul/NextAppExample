@@ -11,14 +11,14 @@ export type RoomType = {
   name: string;
   powerSpots: PowerSpotsType[];
 };
-export type PowerSpotType = {
-  plugType: PowerPlugsEnum;
-  countries: string[];
-  pinCount: number;
-  isGrounded: boolean;
-  amperage: number;
-  voltageRange: number[];
-};
+// export type PowerSpotType = {
+//   plugType: PowerPlugsEnum;
+//   countries: string[];
+//   pinCount: number;
+//   isGrounded: boolean;
+//   amperage: number;
+//   voltageRange: number[];
+// };
 export type PowerSpotsType = { type: string };
 export type EthernetSpotType = {
   providerName: string;
