@@ -9,13 +9,18 @@ type FlatListProps = {
 };
 
 export const FlatList: React.FC<FlatListProps> = ({ flats }) => {
-  let rozetki = countPowerSpots(flats);
+  const powerSpotsSums = countPowerSpots(flats);
 
   return (
     <div className="flex items-stretch flex-wrap justify-center flex-col content-center">
-      {flats.length >= 1 && flats.map((flatItem) => (
-        <FlatView flat={flatItem} />
-      ))}
+      {flats.length >= 1 &&
+        flats.map((flatItem) => <FlatView flat={flatItem} />)}
+      <div className="flats-container bg-gray-300 rounded-xl p-2 m-2 justify-around flex">
+        <p>Summary items to bought:</p>
+        <p>Plugs: {powerSpotsSums?.plugCount}</p>
+        <p>Ethernet Cables: {powerSpotsSums?.ethernetCount}</p>
+        <p>Switchers: {powerSpotsSums?.switcherCount}</p>
+      </div>
     </div>
   );
 };
