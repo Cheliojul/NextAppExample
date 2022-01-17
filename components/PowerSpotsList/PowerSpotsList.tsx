@@ -11,10 +11,10 @@ export const PowerSpotsList: React.FC<PowerSpotsListProps> = ({
   powerSpots,
 }) => {
   return (
-    <>
+    <div className="flex">
       {powerSpots.map((powerSpotsItem) => (
         <PowerSpotView powerSpot={powerSpotsItem} />
       ))}
-    </>
+    </div>
   );
 };

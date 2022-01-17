@@ -96,19 +96,19 @@ export const flatMocks: FlatType[] = [
   {
     id: '1',
     rooms: [room1, room2, room3],
-    floor: 2,
-    flatNumber: 26,
+    floor: '2',
+    flatNumber: '26',
   },
   {
     id: '2',
     rooms: [room1, room2, room3],
-    floor: 8,
-    flatNumber: 116,
+    floor: '8',
+    flatNumber: '116',
   },
   {
     id: '3',
     rooms: [room1, room2, room2, room3],
-    floor: 1,
-    flatNumber: 226,
+    floor: '1',
+    flatNumber: '226',
   },
 ];

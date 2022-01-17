@@ -1,14 +1,9 @@
-export type FlatFormDataType = {
+import { FieldError } from 'react-hook-form';
+
+export type FlatType = {
   id: string;
   flatNumber: string;
   floor: string;
-  rooms: RoomType[];
-}
-  
-export type FlatType = {
-  id: string;
-  flatNumber: number;
-  floor: number;
   rooms: RoomType[];
 };
 export type RoomType = {
@@ -25,11 +20,6 @@ export type PowerSpotType = {
   voltageRange: number[];
 };
 export type PowerSpotsType = { type: string };
-// & (
-//   | PowerSpotType
-//   | SwitcherType
-//   | EthernetSpotType
-// );
 export type EthernetSpotType = {
   providerName: string;
   speed: number;
