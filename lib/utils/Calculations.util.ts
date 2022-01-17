@@ -1,12 +1,6 @@
 import { FlatType, PowerSpotEnum, PowerSpotsType } from '../types/entities';
 
 export function countPowerSpots(flatsData: FlatType[]) {
-  // const obj = {};
-  // Object.entries(PowerSpotEnum).forEach(([key, enumValue]) => {
-  //   Object.defineProperty(obj, enumValue, {
-  //     value: countCertainPowerSpot(flatsData, enumValue),
-  //   });
-  // });
   const plugCount = countCertainPowerSpot(flatsData, PowerSpotEnum.PLUG);
   const ethernetCount = countCertainPowerSpot(
     flatsData,
